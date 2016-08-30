@@ -3,7 +3,7 @@ var mongoose = require('./database');
 var Fish = require('../models/fish'),
     User = require('../models/user');
 
-var users = [
+var newUsers = [
   { // 0
     name: "Earl Url",
     phoneNumber: "4442831923",
@@ -34,7 +34,7 @@ Fish.remove({}, function(err) {
     if (err) console.log(err);
 
     // create users
-    User.create(users, function(err, users) {
+    User.create(newUsers, function(err, users) {
 
       var fishes = [
         { // 0
@@ -66,7 +66,10 @@ Fish.remove({}, function(err) {
 
       // create default fishes
       Fish.create(fishes, function(err, fishes) {
-
+        users[0].fishes(function(err, fishes) {
+          console.log(err);
+          console.log(fishes);
+        });
         if (err) {
           console.log(err);
         } else{

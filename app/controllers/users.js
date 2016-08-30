@@ -13,7 +13,7 @@ var userAuth = function (req, res, next) {
       phoneNumber: req.body.phoneNumber
     }).select('phoneNumber password name').exec(function(err, user) {
 
-      if (err) throw err;
+      if (err) res.json(err);
 
       // no user with that phone number was found
       if (!user) {
@@ -39,7 +39,7 @@ var userAuth = function (req, res, next) {
             name:        user.name,
             _id:         user._id
           }, superSecret, {
-            expiresInMinutes: 43200 // expires in 30 days
+            expiresIn: '30d' // expires in 30 days
           });
 
           // return the information including token as JSON
@@ -76,7 +76,7 @@ var tokenVerify = function(req, res, next) {
         res.status(403).send({
           success: false,
           message: 'Failed to authenticate token.'
-      });
+        });
       } else {
         // if everything is good, save to request for use in other routes
         req.decoded = decoded;
@@ -129,8 +129,12 @@ var userShow = function(req, res) {
   User.findById(req.params.id, function(err, user) {
         if (err) res.send(err);
 
-        // return that user
-        res.json(user);
+    // return that user and their fishes
+    user.fishes(function(err, fishes) {
+      if (err) console.log(err);
+      var myFishes = fishes;
+      res.json({user,  myFishes});
+    });
   });
 };
 

@@ -6,7 +6,7 @@ var FishesCtrl = require('../controllers/fishes'),
     UsersCtrl  = require('../controllers/users');
 
 
-// GET CURRENT USER - WE'RE DOING THIS IN THE BROWSER THOUGH!
+// GET CURRENT USER - WE'RE DOING THIS IN THE BROWSER NOW!
 // apiRouter.get('/me', function(req, res) {
 //   res.send(req.decoded);
 // });

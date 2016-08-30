@@ -1,6 +1,6 @@
 var mongoose     = require('mongoose'),
     Schema       = mongoose.Schema,
-    Fish         = require('./fish.js'),
+    Fish         = require('./fish'),
     bcrypt       = require('bcrypt-nodejs');
 
 //||||||||||||||||||||||||||--
@@ -52,7 +52,7 @@ UserSchema.methods.comparePassword = function(password) {
 
 // Access user's fishes
 UserSchema.methods.fishes = function(callback) {
-  Fish.find({user: this._id}, function(err, fishes) {
+  mongoose.model('Fish').find({user: this._id}, function(err, fishes) {
     callback(err, fishes);
   });
 };
